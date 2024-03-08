@@ -33,6 +33,9 @@
 - Spring boot 템플릿엔진 기본 viewName 매핑
 - resources:templates/ + {ViewName} + .html
 
+
+---
+
 ---
 # 2. 스프링 웹 개발 기초
 - 정적 컨텐츠 
@@ -51,3 +54,15 @@
 3. 컨트롤러 쪽에 hello-static.html이 있는지 찾는다 = 컨트롤러가 먼저 우선순위를 가진다. 
 4. 컨트롤러에 없으면 resources: static/hello-static.html을 찾는다. 
 5. static/hello-static.html 그대로를 반환해준다. 
+
+---
+## MVC와 템플릿 엔진
+#### Model - View - Controller
+1. 웹 브라우저에서 localhost:8080/hello-mvc.html를 던진다.
+2. Spring boot는 Tomcat이라는 웹서버(WAS)이 요청을 받는다. 이를 Spring에 넘긴다.
+3. 컨트롤러 쪽에 hello-mvc.html이 있는지 찾는다 = 컨트롤러가 먼저 우선순위를 가진다.
+4. 컨트롤러를 찾으면 해당 매서드를 수행하고 return "hello-template"를 하면 VewResolver에게 넘겨준다. 
+5. ViewResolver가 뷰를 찾아주고 Thymeleaf 템플릿 엔진을 연결 시켜준다. 
+6. 템플릿 엔진이 랜더링을 해서 변환한 HTML을 웹브라우저에 반환을 한다.
+
+
