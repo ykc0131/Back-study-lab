@@ -33,5 +33,21 @@
 - Spring boot 템플릿엔진 기본 viewName 매핑
 - resources:templates/ + {ViewName} + .html
 
+---
+# 2. 스프링 웹 개발 기초
+- 정적 컨텐츠 
+  - 파일을 그대로 웹 브라우저에 올림
+- MVC와 템플릿 엔진
+  - MVC : Model-View-Controller
+  - 동적
+- API
+  - Json 데이터 구조 포맷으로 클라이언트한테 데이터를 전달
 
 ---
+## 정적 컨텐츠
+> /static 에서 정적 컨텐츠를 제공하고 컨텐츠는 그대로를 반환한다. 
+1. 웹 브라우저에서 localhost:8080/hello-static.html를 던진다.
+2. Spring boot는 Tomcat이라는 웹서버(WAS)이 요청을 받는다. 이를 Spring에 넘긴다. 
+3. 컨트롤러 쪽에 hello-static.html이 있는지 찾는다 = 컨트롤러가 먼저 우선순위를 가진다. 
+4. 컨트롤러에 없으면 resources: static/hello-static.html을 찾는다. 
+5. static/hello-static.html 그대로를 반환해준다. 
