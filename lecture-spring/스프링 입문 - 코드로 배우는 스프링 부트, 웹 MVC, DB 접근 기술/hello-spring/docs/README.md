@@ -51,7 +51,7 @@
 > /static 에서 정적 컨텐츠를 제공하고 컨텐츠는 그대로를 반환한다. 
 1. 웹 브라우저에서 localhost:8080/hello-static.html를 던진다.
 2. Spring boot는 Tomcat이라는 웹서버(WAS)이 요청을 받는다. 이를 Spring에 넘긴다. 
-3. 컨트롤러 쪽에 hello-static.html이 있는지 찾는다 = 컨트롤러가 먼저 우선순위를 가진다. 
+3. 컨트롤러 쪽에 hello-static이 있는지 찾는다 = 컨트롤러가 먼저 우선순위를 가진다. 
 4. 컨트롤러에 없으면 resources: static/hello-static.html을 찾는다. 
 5. static/hello-static.html 그대로를 반환해준다. 
 
@@ -60,9 +60,27 @@
 #### Model - View - Controller
 1. 웹 브라우저에서 localhost:8080/hello-mvc.html를 던진다.
 2. Spring boot는 Tomcat이라는 웹서버(WAS)이 요청을 받는다. 이를 Spring에 넘긴다.
-3. 컨트롤러 쪽에 hello-mvc.html이 있는지 찾는다 = 컨트롤러가 먼저 우선순위를 가진다.
+3. 컨트롤러 쪽에 hello-mvc가 있는지 찾는다 = 컨트롤러가 먼저 우선순위를 가진다.
 4. 컨트롤러를 찾으면 해당 매서드를 수행하고 return "hello-template"를 하면 VewResolver에게 넘겨준다. 
 5. ViewResolver가 뷰를 찾아주고 Thymeleaf 템플릿 엔진을 연결 시켜준다. 
 6. 템플릿 엔진이 랜더링을 해서 변환한 HTML을 웹브라우저에 반환을 한다.
 
+---
+## API
+이전 템플릿 엔진은 View라는 탬플릿이 있는 상황에서 조작하는 방식!
+@ResponseBody를 사용하면 요청 데이터를 그대로 내려줌
 
+#### JSON : Key-Value로 이루어진 구조
+
+### @ResponseBody 사용 원리
+1. 웹 브라우저에서 localhost:8080/hello-api.html를 던진다.
+2. Spring boot는 Tomcat이라는 웹서버(WAS)이 요청을 받는다. 이를 Spring에 넘긴다.
+3. 컨트롤러 쪽에 hello-api가 있는지 찾는다.
+4. template은 ViewResolver한테 던져준다. 하지만! 컨트롤러에 @ResponseBody가 붙어있으면 HTTP의 응답에 데이터 그대로 넣을 거라고 인식한다.
+    - 반환값이 객체일 경우, 기본 default는 json 방식으로 데이터를 만들어서 HTTP 응답에 반환하겠다는게 기본 정책.
+5. @ResponseBody가 붙어있으면 HttpMessageConverter가 동작한다. 
+    - 문자일 경우 = StringConverter 동작
+    - 객체일 경우 = JsonConverter 동작
+
+#### 추가내용
++)getter, setter 방식을 프로퍼티(Property) 접근 방식이라고 한다. 
