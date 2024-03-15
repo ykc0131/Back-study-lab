@@ -112,6 +112,11 @@
 #### JUnit
 테스트 프레임워크
 
-
 #### Assertions 
 org.junit.jupiter 제공
+
+---
+
+## Service
+Repository와 Domain을 활용해서 실제 비즈니스 로직을 작성
+
