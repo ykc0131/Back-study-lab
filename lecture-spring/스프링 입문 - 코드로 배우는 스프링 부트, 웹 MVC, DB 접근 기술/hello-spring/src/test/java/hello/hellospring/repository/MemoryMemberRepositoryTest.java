@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 public class MemoryMemberRepositoryTest {
-    MemoryMemberRespository repository = new MemoryMemberRespository();
+    MemoryMemberRepository repository = new MemoryMemberRepository();
 
     @AfterEach
     public void afterEach(){
