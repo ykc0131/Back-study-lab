@@ -89,17 +89,18 @@
 
 ---
 # 3. 회원 관리 예제 - 백엔드 개발
-#### 1) Controller 
+### 1) Controller 
 - 웹 MVC의 컨트롤러 역할
-#### 2) Service
+### 2) Service
 - 비즈니스 도메인 객체를 가지고 핵심 비즈니스 로직이 동작하도록 구현한 객체
 - ex. 회원은 중복 가입이 안된다. 
-#### 3) Repository
+### 3) Repository
 - 데이터베이스에 접근, 도메인 객체를 DB에 저장하고 관리
-#### 4) Domain 
+### 4) Domain 
 - 비즈니스 도메인 객체 
 - ex. 회원, 주문, 쿠폰 등등 주로 데이터베이스에 저장하고 관리됨
 
+<br>
 
 #### 추가내용
 +)Optional은 값이 null이 나올 가능성을 대비하여 사용한다. 
@@ -119,4 +120,39 @@ org.junit.jupiter 제공
 
 ## Service
 Repository와 Domain을 활용해서 실제 비즈니스 로직을 작성
+
+---
+# 4. 스프링 빈과 의존관계
+Spring 컨테이너에서 Spring Bean이 관리된다.
+
+
+### 스프링 빈을 등록하는 2가지 방법
+1. 컴포넌트 스캔과 자동 의존관계 설정
+2. 자바 코드로 직접 스프링 빈 등록하기
+---
+### 1. 컴포넌트 스캔과 자동 의존관계 설정
+- @Component Annotation
+  - Spring이 Component와 관련된 Annotation이 있으면, 하나씩 스프링 객체로 생성을 해서 스프링 컨테이너에 등록을 한다. 
+- @Autowired는 연관관계를 설정해준다. 
+- ex) MemberController - MemberService - MemberRepository
+
+<br>
+
+#### Q) 아무 곳에 @Component가 있어도 되나?
+#### A) 기본적으로는 안된다.
+~SpringApplication.java에서 실행할 때, 해당 패키지 내에 있는 매서드해당 spring이 다 뒤져서 spring bean으로 등록한다. 
+해당 프로젝트로 따지자면, HelloSpringApplication.java에서 실행 시작 후, 패키지 hello.hellospring 이후로 spring이 @Component Annotation이 붙은 매서드를 spring bean으로 등록해준다. 
+- 즉,해당 패키지 하위에 존재하지 않으면 컴포넌트 스캔 대상이 되지 않는다.
+- @SpringBootApplication을 까보면, @ComponentScan()이라는 Annotation이 있다. (ComponentScan 위치를 바꿀 수 있긴 하다.)
+
+
+<br>
+
+스프링은 스프링 컨테이너에 스프링 빈을 등록할 때, 기본으로 싱글톤으로 등록한다. (유일하게 하나만 등록해서 공유한다.)
+- 메모리 절약하고 좋다.
+- 따라서, 같은 스프링 빈으로 모두 같은 인스턴스이다. 
+- 설정으로 싱글톤이 아니게 설정할 수 있지만, 특별한 경우를 제외하면 대부분 싱글톤을 사용한다. 
+
+---
+### 2. 자바 코드로 직접 스프링 빈 등록하기
 
