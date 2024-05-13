@@ -155,4 +155,74 @@ Spring 컨테이너에서 Spring Bean이 관리된다.
 
 ---
 ### 2. 자바 코드로 직접 스프링 빈 등록하기
+@Configuration Annotation을 통해 빈 등록해주기
+
+```java
+@Configuration
+public class SpringConfig {
+
+    @Bean
+    public MemberService memberService() {
+        return new MemberService(memberRepository());
+    }
+
+    @Bean
+    public MemberRepository memberRepository() {
+        return new MemoryMemberRepository();
+    }
+}
+```
+---
+### 각각 장단점
+Dependency Injection (DI)에는 1) 필드 주입, 2) setter 주입, 3) 생성자 주입 이렇게 3가지 방법이 있다. 
+1. 필드 주입
+
+    생성자를 빼고 필드에다가 Auto-wired하는 방법
+    ```java
+   @Controller 
+   public class MemberController{
+        @Autowired private MemberService memberService;
+   }
+   ```
+   -> But, 필드 주입은 추천하지 않는다. 
+    필드 주입은 이후에 수정 혹은 바꿀 수 있는 방법이 없다.
+
+
+2. 생성자 주입
+
+    생성자를 통해서 들어오는 방법
+    ```java
+   @Service
+   public class MemberService{
+        private final MemberRepository memberRepository;
+        
+        @Autowired
+        public MemberService(MemberRepository memberRepository) {
+            this.memberRepository = memberRepository;
+        }
+   }
+    ```
+   
+
+3. Setter 주입
+
+    생성은 생성대로 되고 Setter는 나중에 호출이 되는 방법
+    ```java
+   @Controller
+   public class MemberController{
+        private final MemberService memberService;
+   
+       @Autowired
+       public void setMemberService(MemberService memberService){
+            this.memberService = memberService;
+        }
+   }
+   ```
+   - 단점 : 멤버 컨트롤을 호출했을 때 setter가 public으로 열려있어야 한다. 사실, memberService가 한번 설정되면 바꿔치기 할 이유가 없다. 퍼블릭하게 노출되면 잘못 바꿀 가능성도 있기 때문에 문제가 된다.
+
+<br>
+
+결과적으로 제일 많이 사용하는 게, 생성자 injection 방식이다.
+조립 시점에 생성자로 한 번만 조립해놓고 끝을 낸다. 
+- 의존관계가 실행 중에 동적으로 변하는 경우는 거의 없으므로 생성자 주입을 권장!
 
